@@ -1,4 +1,4 @@
-package com.fit.NotUseDP;
+package com.fit.not_use_dp;
 
 public class Employee {
     String name;

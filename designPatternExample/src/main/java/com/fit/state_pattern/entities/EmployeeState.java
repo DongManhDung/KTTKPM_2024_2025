@@ -1,6 +1,6 @@
-package com.fit.StatePattern.entities;
+package com.fit.state_pattern.entities;
 
-import com.fit.StatePattern.repositories.RoleState;
+import com.fit.state_pattern.repositories.RoleState;
 
 public class EmployeeState {
     private String name;

@@ -1,6 +1,6 @@
-package com.fit.StatePattern.services;
+package com.fit.state_pattern.services;
 
-import com.fit.StatePattern.repositories.RoleState;
+import com.fit.state_pattern.repositories.RoleState;
 
 public class TeamLeaderState implements RoleState {
     @Override
