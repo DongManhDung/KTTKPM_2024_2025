@@ -1,4 +1,4 @@
-package com.fit.enties;
+package com.fit.NotUseDP;
 
 public class Employee {
     String name;
