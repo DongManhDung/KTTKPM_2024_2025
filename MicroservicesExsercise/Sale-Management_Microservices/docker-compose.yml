@@ -1,52 +1,65 @@
 version: '3.8'
+
 services:
-  api-gateway:
-    build: ./api-gateway
+  postgres:
+    image: postgres
+    container_name: postgres-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     ports:
-      - "8080:8080"
-    depends_on:
-      - product-service
-      - order-service
-      - customer-service
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 
   product-service:
-    build: ./product-service
+    image: eclipse-temurin:17-jdk
+    container_name: product-service
+    depends_on:
+      - postgres
     ports:
       - "8081:8081"
+    volumes:
+      - ./product-service/target/product-service-0.0.1-SNAPSHOT.jar:/app.jar
+    command: ["java", "-jar", "/app.jar"]
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://product-db:5432/productdb
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/productdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SERVER_PORT: 8081
 
-  order-service:
-    build: ./order-service
-    ports:
-      - "8082:8082"
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://order-db:5432/orderdb
+  # order-service:
+  #   image: eclipse-temurin:17-jdk
+  #   container_name: order-service
+  #   depends_on:
+  #     - postgres
+  #   ports:
+  #     - "8082:8082"
+  #   volumes:
+  #     - ./order-service/target/order-service-0.0.1-SNAPSHOT.jar:/app.jar
+  #   command: ["java", "-jar", "/app.jar"]
+  #   environment:
+  #     SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/orderdb
+  #     SPRING_DATASOURCE_USERNAME: postgres
+  #     SPRING_DATASOURCE_PASSWORD: postgres
+  #     SERVER_PORT: 8082
 
-  customer-service:
-    build: ./customer-service
-    ports:
-      - "8083:8083"
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://customer-db:5432/customerdb
+  # customer-service:
+  #   image: eclipse-temurin:17-jdk
+  #   container_name: customer-service
+  #   depends_on:
+  #     - postgres
+  #   ports:
+  #     - "8083:8083"
+  #   volumes:
+  #     - ./customer-service/target/customer-service-0.0.1-SNAPSHOT.jar:/app.jar
+  #   command: ["java", "-jar", "/app.jar"]
+  #   environment:
+  #     SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/customerdb
+  #     SPRING_DATASOURCE_USERNAME: postgres
+  #     SPRING_DATASOURCE_PASSWORD: postgres
+  #     SERVER_PORT: 8083
 
-  product-db:
-    image: postgres
-    environment:
-      POSTGRES_DB: productdb
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: pass
-
-  order-db:
-    image: postgres
-    environment:
-      POSTGRES_DB: orderdb
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: pass
-
-  customer-db:
-    image: postgres
-    environment:
-      POSTGRES_DB: customerdb
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: pass
+volumes:
+  pgdata:
