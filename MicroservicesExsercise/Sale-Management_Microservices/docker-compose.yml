@@ -29,37 +29,37 @@ services:
       SPRING_DATASOURCE_PASSWORD: postgres
       SERVER_PORT: 8081
 
-  # order-service:
-  #   image: eclipse-temurin:17-jdk
-  #   container_name: order-service
-  #   depends_on:
-  #     - postgres
-  #   ports:
-  #     - "8082:8082"
-  #   volumes:
-  #     - ./order-service/target/order-service-0.0.1-SNAPSHOT.jar:/app.jar
-  #   command: ["java", "-jar", "/app.jar"]
-  #   environment:
-  #     SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/orderdb
-  #     SPRING_DATASOURCE_USERNAME: postgres
-  #     SPRING_DATASOURCE_PASSWORD: postgres
-  #     SERVER_PORT: 8082
+  order-service:
+    image: eclipse-temurin:17-jdk
+    container_name: order-service
+    depends_on:
+      - postgres
+    ports:
+      - "8082:8082"
+    volumes:
+      - ./order-service/target/order-service-0.0.1-SNAPSHOT.jar:/app.jar
+    command: ["java", "-jar", "/app.jar"]
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/orderdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SERVER_PORT: 8082
 
-  # customer-service:
-  #   image: eclipse-temurin:17-jdk
-  #   container_name: customer-service
-  #   depends_on:
-  #     - postgres
-  #   ports:
-  #     - "8083:8083"
-  #   volumes:
-  #     - ./customer-service/target/customer-service-0.0.1-SNAPSHOT.jar:/app.jar
-  #   command: ["java", "-jar", "/app.jar"]
-  #   environment:
-  #     SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/customerdb
-  #     SPRING_DATASOURCE_USERNAME: postgres
-  #     SPRING_DATASOURCE_PASSWORD: postgres
-  #     SERVER_PORT: 8083
+  customer-service:
+    image: eclipse-temurin:17-jdk
+    container_name: customer-service
+    depends_on:
+      - postgres
+    ports:
+      - "8083:8083"
+    volumes:
+      - ./customer-service/target/customer-service-0.0.1-SNAPSHOT.jar:/app.jar
+    command: ["java", "-jar", "/app.jar"]
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/customerdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SERVER_PORT: 8083
 
 volumes:
   pgdata:
