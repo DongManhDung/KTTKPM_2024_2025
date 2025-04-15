@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+}
+
+allprojects {
+    group = 'com.example'
+    version = '1.0'
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    repositories {
+        mavenCentral()
+    }
+
+    ext {
+        set('springBootVersion', '3.2.0')
+        set('javaVersion', JavaVersion.VERSION_17)
+    }
+
+    dependencies {
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
+
+    java {
+        sourceCompatibility = javaVersion
+        targetCompatibility = javaVersion
+    }
+}

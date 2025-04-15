@@ -1,0 +1,2 @@
+rootProject.name = 'circuit-breaker-gradle'
+include 'main-service', 'external-service'
